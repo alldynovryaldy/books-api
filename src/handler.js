@@ -89,6 +89,72 @@ const addBookHandler = (request, h) => {
 
 // Read
 const getAllBookHandler = (request, h) => {
+  // query
+  const { name, reading, finished } = request.query;
+
+  // if existing query reading
+  if (name) {
+    const filterNameBook = books.filter((value) => {
+      // gi = global match and case-insensitive
+      const newName = new RegExp(name, 'gi');
+      return newName.test(value.name);
+    });
+
+    const response = h.response({
+      status: 'success',
+      data: {
+        books: filterNameBook.map((book) => ({
+          id: book.id,
+          name: book.name,
+          publisher: book.publisher,
+        })),
+      },
+    });
+    response.code(200);
+    return response;
+  }
+
+  // if existing query reading
+  if (reading) {
+    const filterReadingBook = books.filter(
+      (value) => Number(value.reading) === Number(reading)
+    );
+
+    const response = h.response({
+      status: 'success',
+      data: {
+        books: filterReadingBook.map((book) => ({
+          id: book.id,
+          name: book.name,
+          publisher: book.publisher,
+        })),
+      },
+    });
+    response.code(200);
+    return response;
+  }
+
+  // if existing query finished
+  if (finished) {
+    const filterFinishedBook = books.filter(
+      (value) => Number(value.finished) === Number(finished)
+    );
+
+    const response = h.response({
+      status: 'success',
+      data: {
+        books: filterFinishedBook.map((book) => ({
+          id: book.id,
+          name: book.name,
+          publisher: book.publisher,
+        })),
+      },
+    });
+    response.code(200);
+    return response;
+  }
+
+  // all data
   const response = h.response({
     status: 'success',
     data: {
