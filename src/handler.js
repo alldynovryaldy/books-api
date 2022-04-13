@@ -100,14 +100,16 @@ const getAllBookHandler = (request, h) => {
       return newName.test(value.name);
     });
 
+    const newFilterName = filterNameBook.map((book) => ({
+      id: book.id,
+      name: book.name,
+      publisher: book.publisher,
+    }));
+
     const response = h.response({
       status: 'success',
       data: {
-        books: filterNameBook.map((book) => ({
-          id: book.id,
-          name: book.name,
-          publisher: book.publisher,
-        })),
+        books: newFilterName,
       },
     });
     response.code(200);
@@ -120,14 +122,16 @@ const getAllBookHandler = (request, h) => {
       (value) => Number(value.reading) === Number(reading)
     );
 
+    const newReadingBook = filterReadingBook.map((book) => ({
+      id: book.id,
+      name: book.name,
+      publisher: book.publisher,
+    }));
+
     const response = h.response({
       status: 'success',
       data: {
-        books: filterReadingBook.map((book) => ({
-          id: book.id,
-          name: book.name,
-          publisher: book.publisher,
-        })),
+        books: newReadingBook,
       },
     });
     response.code(200);
@@ -140,14 +144,16 @@ const getAllBookHandler = (request, h) => {
       (value) => Number(value.finished) === Number(finished)
     );
 
+    const newFinishedBook = filterFinishedBook.map((book) => ({
+      id: book.id,
+      name: book.name,
+      publisher: book.publisher,
+    }));
+
     const response = h.response({
       status: 'success',
       data: {
-        books: filterFinishedBook.map((book) => ({
-          id: book.id,
-          name: book.name,
-          publisher: book.publisher,
-        })),
+        books: newFinishedBook,
       },
     });
     response.code(200);
