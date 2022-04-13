@@ -23,7 +23,7 @@ const addBookHandler = (request, h) => {
 
   const finished = pageCount === readPage;
 
-  // menggabungkan objek data dalam 1 variable
+  // init book
   const newBooks = {
     id,
     name,
@@ -59,7 +59,7 @@ const addBookHandler = (request, h) => {
     return response;
   }
 
-  // memasukkan data ke dalam array books
+  // push data to array books
   books.push(newBooks);
 
   // check data
@@ -94,7 +94,36 @@ const getBookHandler = () => ({
   },
 });
 
+// Get book by id
+const getBookByIdHandler = (request, h) => {
+  // get id book
+  const { id } = request.params;
+
+  // get data book
+  const book = books.filter((n) => n.id === id)[0];
+
+  // if data ready
+  if (book !== undefined) {
+    return {
+      status: 'success',
+      data: {
+        book,
+      },
+    };
+  }
+
+  // if data not found
+  const response = h.response({
+    status: 'fail',
+    message: 'Buku tidak ditemukan',
+  });
+  response.code(404);
+
+  return response;
+};
+
 module.exports = {
   addBookHandler,
   getBookHandler,
+  getBookByIdHandler,
 };
